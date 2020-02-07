@@ -1,0 +1,31 @@
+{
+  "name": "duckdns",
+  "version": "1.0.0",
+  "description": "A simple duckdns updater.",
+  "main": "index.js",
+  "bin": {
+    "duckdns": "./bin/duckdns-cli"
+  },
+  "scripts": {
+    "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ridvanaltun/duckdns.git"
+  },
+  "keywords": [
+    "duckdns",
+    "dns"
+  ],
+  "author": "Ridvan Altun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ridvanaltun/duckdns/issues"
+  },
+  "homepage": "https://github.com/ridvanaltun/duckdns#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "yargs": "^15.1.0"
+  }
+}

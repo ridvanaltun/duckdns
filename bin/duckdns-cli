@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+const axios = require('axios');
+const argv = require('yargs')
+  .epilogue('for more information, find our manual at https://github.com/ridvanaltun/duckdns')
+  .example('$0 -i 1.1.1.1 --token abc123 --domain my-domain --http --ipv6')
+  .options({
+    'ip': {
+      alias: 'i',
+      describe: 'A new IP address',
+      type: 'string',
+      nargs: 1,
+      demandOption: true
+    },
+    'ipv6': {
+      describe: 'Use IPv6 instead of IPv4',
+      type: 'boolean'
+    },
+    'token': {
+      alias: 't',
+      describe: 'Token of your DuckDNS account',
+      type: 'string',
+      nargs: 1,
+      demandOption: true
+    },
+    'domain': {
+      alias: 'd',
+      describe: 'Domain address without .duckdns.org',
+      type: 'string',
+      nargs: 1,
+      demandOption: true
+    },
+    'http': {
+      describe: 'Use HTTP instead of HTTPS',
+      type: 'boolean'
+    }
+  })
+  .help()
+  .argv;
+
+let reqDomain = argv.http ? 'http://www.duckdns.org/update?' : 'https://www.duckdns.org/update?';
+reqDomain += argv.ipv6 ? 'ipv6=' : 'ip=';
+reqDomain += argv.ip + '&domains=' + argv.domain + '&token=' + argv.token;
+
+axios.get(reqDomain)
+  .then(function (response) {
+    const body = response['data'];
+    if (body === 'OK') {
+      // handle success
+      console.log('\n' + argv.domain + '.duckdns.org updated to ' + argv.ip);
+      process.exit(0);
+    } else {
+      // handle unsuccessful
+      console.log('\n' + 'Unsuccessful, check your parameters!');
+      process.exit(1);
+    }
+    console.log(response['data']);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+    process.exit(2);
+  });
