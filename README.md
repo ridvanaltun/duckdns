@@ -1,5 +1,7 @@
 # duckdns
 
+[![npm version](https://badge.fury.io/js/duckdns.svg)](https://badge.fury.io/js/duckdns)
+
 > An another updater tool & lib for [DuckDNS](https://www.duckdns.org/).
 
 # Table of Contents
